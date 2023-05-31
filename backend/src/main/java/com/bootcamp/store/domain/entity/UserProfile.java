@@ -11,7 +11,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
     private long Id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     @Size(min = 3, max = 100)
     private String username;
 
@@ -27,7 +27,7 @@ public class UserProfile {
     @Size(max = 9)
     private String telephoneNumber;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     @Size(min = 10, max = 100)
     private String email;
 
