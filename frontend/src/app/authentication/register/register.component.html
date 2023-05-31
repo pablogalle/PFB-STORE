@@ -1,0 +1,116 @@
+<form *ngIf="registerForm" [formGroup]="registerForm!" novalidate autocomplete="off">
+
+    <!-- Username -->
+    <div class="form-group">
+        <label for="username">Nombre de Usuario</label>
+        <input type="text" class="form-control" id="username" formControlName="username" placeholder="Usuario">
+    </div>
+
+    <div *ngIf="(registerForm.get('username')!.dirty && registerForm.get('username')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('username')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('username')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Name -->
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nombre">
+    </div>
+
+    <div *ngIf="(registerForm.get('name')!.dirty && registerForm.get('name')!.errors)">
+        <small class="form-text text-danger" name *ngIf="registerForm.get('name')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('name')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Apellido -->
+    <div class="form-group">
+        <label for="surname">Nombre de Usuario</label>
+        <input type="text" class="form-control" id="surname" formControlName="surname" placeholder="Apellido">
+    </div>
+
+    <div *ngIf="(registerForm.get('surname')!.dirty && registerForm.get('surname')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('surname')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('surname')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Numero de Telefono -->
+    <div class="form-group">
+        <label for="phoneNumber">Numero de telefono</label>
+        <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Telefono">
+    </div>
+
+    <div *ngIf="(registerForm.get('phoneNumber')!.dirty && registerForm.get('phoneNumber')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('phoneNumber')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('phoneNumber')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+    </div>
+
+    <div *ngIf="(registerForm.get('email')!.dirty && registerForm.get('email')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('email')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('email')!.errors!['email']">
+            Esta no es una direccion de correo valida
+        </small>
+    </div>
+
+
+    <!-- Contraseña -->
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Contraseña">
+    </div>
+
+    <div *ngIf="(registerForm.get('password')!.dirty && registerForm.get('password')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('password')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('password')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+
+    <!-- Confirmar Contraseña -->
+    <div class="form-group">
+        <label for="confirmPassword">Repite la Contraseña</label>
+        <input type="confirmPassword" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Repite Contraseña">
+    </div>
+
+    <div *ngIf="(registerForm.get('confirmPassword')!.dirty && registerForm.get('confirmPassword')!.errors)">
+        <small class="form-text text-danger" *ngIf="registerForm.get('confirmPassword')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger" *ngIf="registerForm.get('confirmPassword')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+
+
+    <div class="buttonsForm">
+        <button [routerLink]="['/identification']" class="btn btn-secondary">Cancelar</button>
+        <button (click)="attemptRegister()" [disabled]="registerForm.invalid" class="btn btn-primary">Registrate</button>
+    </div>
+</form>

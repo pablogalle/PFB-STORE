@@ -1,0 +1,15 @@
+.container{
+    background-color: whitesmoke;
+    border-radius: 15px;
+    padding: 5rem;
+    h1{
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .buttonsForm{
+        display: flex;
+        padding: 1rem;
+        justify-content:space-evenly;
+    }
+}
