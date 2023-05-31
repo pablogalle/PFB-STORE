@@ -43,8 +43,9 @@ public class UserProfileRestController {
     @CrossOrigin
     @PostMapping(value = "/users", produces = "application/json", consumes = "application/json")
     ResponseEntity<UserProfileDTO> insertUser(@RequestBody UserProfileDTO userProfileDTO) {
-        userProfileDTO = this.userProfileService.saveUserProfile(userProfileDTO);
-        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+        Optional<UserProfileDTO> userProfileOptDTO = this.userProfileService.saveUserProfile(userProfileDTO);
+        if (userProfileOptDTO.isPresent()) return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @CrossOrigin

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ValidationService } from '../services/validation.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { UserProfile } from '../model/UserProfile.model';
+import { HttpStatusCode } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,16 +14,14 @@ import { ValidationService } from '../services/validation.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  attemptRegister() {
-    throw new Error('Method not implemented.');
-  }
 
   registerForm?: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private validationService: ValidationService) {
+    private authenticationService: AuthenticationService,
+    private router: Router) {
 
   }
 
@@ -56,4 +58,38 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  attemptRegister() {
+    let userProfile = this.createFromForm()
+    this.authenticationService.registerUser(userProfile).subscribe(
+      response => {
+        if(response.status == HttpStatusCode.Created){
+          let data = response.body!
+          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password))
+          this.router.navigate(['/categories']) 
+        }
+        else if(response.status == HttpStatusCode.Conflict) this.showErrorMessage("Usuario ya Existente", "Ya existe una cuenta con ese nombre de usuario")
+        else this.showErrorMessage("Error inesperado", "Revisa los datos insertados e intentalo de nuevo")
+      },
+      err => console.log(err)
+    )
+  }
+
+  createFromForm(): UserProfile {
+    return {
+      ...UserProfile,
+      username: this.registerForm?.get(['username'])!.value,
+      name: this.registerForm?.get(['name'])!.value,
+      apellidos: this.registerForm?.get(['surname'])!.value,
+      telephoneNumber: this.registerForm?.get(['phoneNumber'])!.value,
+      email : this.registerForm?.get(['email'])!.value,
+      password : this.registerForm?.get(['password'])!.value
+    }
+  }
+
+
+  showErrorMessage(summary:string, detail: string) {
+    this.messageService.add({ severity: 'error', summary: summary, detail: detail });
+  }
 }
+
+

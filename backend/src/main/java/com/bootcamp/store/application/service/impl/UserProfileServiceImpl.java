@@ -4,7 +4,6 @@ import com.bootcamp.store.application.dto.UserAuthDTO;
 import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.application.mapper.UserProfileMapper;
 import com.bootcamp.store.application.service.UserProfileService;
-import com.bootcamp.store.domain.entity.Item;
 import com.bootcamp.store.domain.entity.UserProfile;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileDTO saveUserProfile(UserProfileDTO userProfileDTO) {
-        UserProfile userSaved = this.persistence.saveUserProfile(this.mapper.toEntity(userProfileDTO));
-        return this.mapper.toDto(userSaved);
+    public Optional<UserProfileDTO> saveUserProfile(UserProfileDTO userProfileDTO) {
+        return this.persistence.saveUserProfile(this.mapper.toEntity(userProfileDTO)).map(mapper :: toDto );
+
     }
 
     @Override

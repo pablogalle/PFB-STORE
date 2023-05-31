@@ -6,6 +6,7 @@ import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,8 +26,9 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
     }
 
     @Override
-    public UserProfile saveUserProfile(UserProfile userProfile) {
-        return this.userRepository.save(userProfile);
+    public Optional<UserProfile> saveUserProfile(UserProfile userProfile) {
+        if (getUserByUsername(userProfile.getUsername()).isPresent()) return Optional.empty();
+        return Optional.of(this.userRepository.save(userProfile));
     }
 
     @Override

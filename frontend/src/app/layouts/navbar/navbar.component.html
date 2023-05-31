@@ -21,9 +21,10 @@
 
     <div class="row" *ngIf="isLoggedIn()">
       <div class="col">
-        <p>{{user!.getUsername()}}</p>
+        <p>{{user!.username}}</p>
         <small (click)="logOutUser()">Sign out</small>
       </div>
     </div>
+    
   </div>
 </nav>

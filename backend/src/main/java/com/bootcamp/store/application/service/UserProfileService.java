@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserProfileService {
     Optional<UserProfileDTO> getUserByUsername(String username);
-    UserProfileDTO saveUserProfile(UserProfileDTO userProfile);
+    Optional<UserProfileDTO> saveUserProfile(UserProfileDTO userProfile);
     List<UserProfileDTO> getAllUsers();
 
     Optional<UserProfileDTO> authenticateUser(UserAuthDTO userAuthDTO);

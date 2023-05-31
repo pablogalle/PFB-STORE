@@ -18,6 +18,11 @@ export class AuthenticationService {
     return this.http.post<UserProfile>(urlEndpoint, userAuth, {observe: 'response'});
   }
 
+  registerUser(userProfile : UserProfile){
+    let urlEndpoint: string = "http://localhost:8080/store/users/";
+    return this.http.post<UserProfile>(urlEndpoint, userProfile, {observe: 'response'});
+  }
+
   setUser(userProfile: UserProfile){
     this.userProfile = userProfile
   }

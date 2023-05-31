@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserAuth } from '../model/UserAuth.model';
 import { UserProfile } from '../model/UserProfile.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-identification',
@@ -17,7 +18,8 @@ export class IdentificationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
     ) { }
 
 
@@ -39,16 +41,13 @@ export class IdentificationComponent implements OnInit {
       response => {
         if(response.status == 200) {
           let data = response.body!
-          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.phoneNumber, data.email, data.password))
-          this.showSuccessMessage("Login correcto", "Acceso permitido")
+          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password))
+          
+          this.router.navigate(['/categories'])
         }
       },
       err => this.handleError(err)
     )
-  }
-
-  showSuccessMessage(summary:string, detail: string) {
-    this.messageService.add({ severity: 'success', summary: summary, detail: detail });
   }
 
   showErrorMessage(summary:string, detail: string) {
