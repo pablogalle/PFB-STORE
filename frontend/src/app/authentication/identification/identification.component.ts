@@ -30,5 +30,5 @@ export class IdentificationComponent implements OnInit {
 
   logIn() {
     throw new Error('Method not implemented.');
-    }
+  }
 }

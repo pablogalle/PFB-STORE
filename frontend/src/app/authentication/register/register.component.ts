@@ -9,17 +9,19 @@ import { ValidationService } from '../services/validation.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit{
-attemptRegister() {
-throw new Error('Method not implemented.');
-}
+export class RegisterComponent implements OnInit {
+  attemptRegister() {
+    throw new Error('Method not implemented.');
+  }
 
   registerForm?: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private validationService: ValidationService){}
+    private validationService: ValidationService) {
+
+  }
 
   ngOnInit(): void {
     this.loadForm()
@@ -33,11 +35,25 @@ throw new Error('Method not implemented.');
       phoneNumber: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      confirmPassword: ['', [Validators.required]],
     },
-    this.validationService.passwordMatch('password', 'confirmPassword')
+      { validator: this.passwordMatchValidator }
     )
   }
 
-  
+  get confirmPasswordControl() {
+    return this.registerForm!.get('confirmPassword');
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')!.value;
+    const confirmPassword = formGroup.get('confirmPassword')!.value;
+
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword')!.setErrors({ passwordMismatch: true });
+    } else {
+      formGroup.get('confirmPassword')!.setErrors(null);
+    }
+  }
+
 }

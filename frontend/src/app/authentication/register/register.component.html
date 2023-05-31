@@ -95,20 +95,19 @@
     <!-- Confirmar Contraseña -->
     <div class="form-group">
         <label for="confirmPassword">Repite la Contraseña</label>
-        <input type="confirmPassword" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Repite Contraseña">
+        <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Repite Contraseña">
     </div>
 
     <div *ngIf="(registerForm.get('confirmPassword')!.dirty && registerForm.get('confirmPassword')!.errors)">
         <small class="form-text text-danger" *ngIf="registerForm.get('confirmPassword')!.errors!['required']">
             Este campo es requerido
         </small>
-        <small class="form-text text-danger" *ngIf="registerForm.get('confirmPassword')!.errors!['minlength']">
-            Este campo tiene que tener una longitud mínima de 3 caracteres
+        <small class="form-text text-danger" *ngIf="registerForm.get('confirmPassword')!.invalid">
+            Las contraseñas no coinciden
         </small>
     </div>
 
-
-
+    
     <div class="buttonsForm">
         <button [routerLink]="['/identification']" class="btn btn-secondary">Cancelar</button>
         <button (click)="attemptRegister()" [disabled]="registerForm.invalid" class="btn btn-primary">Registrate</button>
