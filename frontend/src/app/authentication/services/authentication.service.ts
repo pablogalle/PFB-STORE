@@ -9,10 +9,23 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
+  userProfile? : UserProfile;
+
   constructor(private http: HttpClient) { }
 
   authenticateUser(userAuth : UserAuth){
     let urlEndpoint: string = "http://localhost:8080/store/users/authenticate";
     return this.http.post<UserProfile>(urlEndpoint, userAuth, {observe: 'response'});
+  }
+
+  setUser(userProfile: UserProfile){
+    this.userProfile = userProfile
+  }
+  getUser() : UserProfile{
+    return this.userProfile!
+  }
+
+  signOutUser(){
+    this.userProfile = undefined
   }
 }

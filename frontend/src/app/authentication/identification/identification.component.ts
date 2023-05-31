@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserAuth } from '../model/UserAuth.model';
+import { UserProfile } from '../model/UserProfile.model';
 
 @Component({
   selector: 'app-identification',
@@ -36,7 +37,11 @@ export class IdentificationComponent implements OnInit {
     let userAuth = new UserAuth(this.loginForm!.get('username')!.value, this.loginForm!.get('password')!.value)
     this.authenticationService.authenticateUser(userAuth).subscribe(
       response => {
-        if(response.status == 200) this.showSuccessMessage("Login correcto", "Acceso permitido")
+        if(response.status == 200) {
+          let data = response.body!
+          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.phoneNumber, data.email, data.password))
+          this.showSuccessMessage("Login correcto", "Acceso permitido")
+        }
       },
       err => this.handleError(err)
     )

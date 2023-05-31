@@ -13,10 +13,17 @@
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" aria-current="page" [routerLink]="['items']">Artículos</a>
         </li>
+        <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!isLoggedIn()">
+          <a class="nav-link" aria-current="page" [routerLink]="['identification']">Identificate</a>
+        </li>
       </div>
     </div>
-    <button class="btn btn-secondary">
-      <a class="identifion-link" [routerLink]="['identification']">Identificate</a>
-    </button>
+
+    <div class="row" *ngIf="isLoggedIn()">
+      <div class="col">
+        <p>{{user!.getUsername()}}</p>
+        <small (click)="logOutUser()">Sign out</small>
+      </div>
+    </div>
   </div>
 </nav>

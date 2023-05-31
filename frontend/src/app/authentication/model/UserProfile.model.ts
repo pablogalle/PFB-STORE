@@ -1,22 +1,22 @@
 export class UserProfile {
-    private username: string;
-    private name: string;
-    private surname: string;
-    private phoneNumber: string;
-    private email: string;
-    private password: string;
+    username: string;
+    name: string;
+    apellidos: string;
+    phoneNumber: string;
+    email: string;
+    password: string;
 
     constructor(
         username: string,
         name: string,
-        surname: string,
+        apellidos: string,
         phoneNumber: string,
         email: string,
         password: string
     ) {
         this.username = username
         this.name = name
-        this.surname = surname
+        this.apellidos = apellidos
         this.phoneNumber = phoneNumber
         this.email = email
         this.password = password
@@ -39,11 +39,11 @@ export class UserProfile {
     }
 
     public getSurname(): string {
-        return this.surname;
+        return this.apellidos;
     }
 
     public setSurname(surname: string): void {
-        this.surname = surname;
+        this.apellidos = surname;
     }
 
     public getPhoneNumber(): string {

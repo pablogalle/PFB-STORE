@@ -1,6 +1,6 @@
 export class UserAuth {
-    private username: string
-    private password: string
+    username: string
+    password: string
 
     constructor(username: string, password: string) {
         this.username = username
