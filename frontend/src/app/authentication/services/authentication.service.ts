@@ -9,28 +9,48 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
-  userProfile? : UserProfile;
+  userProfile?: UserProfile;
 
   constructor(private http: HttpClient) { }
 
-  authenticateUser(userAuth : UserAuth){
+  authenticateUser(userAuth: UserAuth) {
     let urlEndpoint: string = "http://localhost:8080/store/users/authenticate";
-    return this.http.post<UserProfile>(urlEndpoint, userAuth, {observe: 'response'});
+    return this.http.post<UserProfile>(urlEndpoint, userAuth, { observe: 'response' });
   }
 
-  registerUser(userProfile : UserProfile){
+  registerUser(userProfile: UserProfile) {
     let urlEndpoint: string = "http://localhost:8080/store/users/";
-    return this.http.post<UserProfile>(urlEndpoint, userProfile, {observe: 'response'});
+    return this.http.post<UserProfile>(urlEndpoint, userProfile, { observe: 'response' });
   }
 
-  setUser(userProfile: UserProfile){
+  getUserByUsername(username: string) {
+    let urlEndpoint: string = "http://localhost:8080/store/users/";
+    return this.http.get<UserProfile>(urlEndpoint + username, { observe: 'response' });
+  }
+
+
+  setUser(userProfile: UserProfile) {
     this.userProfile = userProfile
-  }
-  getUser() : UserProfile{
-    return this.userProfile!
+    localStorage.setItem('username', userProfile.username)
+
+    console.log(localStorage.getItem('username'))
   }
 
-  signOutUser(){
+  asignUserFromPersistence() {
+    if (localStorage.getItem('username')) {
+      this.getUserByUsername(localStorage.getItem('username')!).subscribe(
+        response => {
+          let data = response.body!
+          this.userProfile = new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password, data.id)
+        }
+      )
+    } else console.log("No user in persistence")
+  }
+
+  signOutUser() {
+    localStorage.removeItem('username')
     this.userProfile = undefined
   }
 }
+
+

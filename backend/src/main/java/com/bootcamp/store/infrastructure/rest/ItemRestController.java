@@ -71,7 +71,6 @@ public class ItemRestController {
         Optional<ItemDTO> item = this.itemService.getItemById(itemId);
 
         if (item.isPresent()) return new ResponseEntity<ItemDTO>(item.get(), HttpStatus.OK);
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

@@ -41,8 +41,7 @@ export class IdentificationComponent implements OnInit {
       response => {
         if(response.status == 200) {
           let data = response.body!
-          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password))
-          
+          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password, data.id))
           this.router.navigate(['/categories'])
         }
       },

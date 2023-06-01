@@ -32,7 +32,7 @@ public class UserProfileRestController {
 
     @CrossOrigin
     @GetMapping(value = "/users/{username}", produces = "application/json")
-    ResponseEntity<UserProfileDTO> getUserById(@PathVariable String username) {
+    ResponseEntity<UserProfileDTO> getUserByUsername(@PathVariable String username) {
         Optional<UserProfileDTO> user = this.userProfileService.getUserByUsername(username);
 
         if (user.isPresent()) return new ResponseEntity<UserProfileDTO>(user.get(), HttpStatus.OK);

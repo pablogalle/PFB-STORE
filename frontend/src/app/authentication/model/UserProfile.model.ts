@@ -1,4 +1,6 @@
-export class UserProfile {
+export class UserProfile{
+
+    id?: number
     username: string;
     name: string;
     apellidos: string;
@@ -12,8 +14,10 @@ export class UserProfile {
         apellidos: string,
         telephoneNumber: string,
         email: string,
-        password: string
+        password: string,
+        id?: number,
     ) {
+        this.id = id
         this.username = username
         this.name = name
         this.apellidos = apellidos
