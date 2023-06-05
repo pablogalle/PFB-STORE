@@ -7,6 +7,7 @@ import com.bootcamp.store.application.service.UserProfileService;
 import com.bootcamp.store.domain.entity.UserProfile;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfilePersistence persistence;
     private final UserProfileMapper mapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserProfileServiceImpl(UserProfilePersistence persistence, UserProfileMapper mapper) {
@@ -30,6 +34,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public Optional<UserProfileDTO> saveUserProfile(UserProfileDTO userProfileDTO) {
+        //encode pass
         return this.persistence.saveUserProfile(this.mapper.toEntity(userProfileDTO)).map(mapper :: toDto );
 
     }

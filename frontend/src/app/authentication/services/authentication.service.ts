@@ -32,8 +32,6 @@ export class AuthenticationService {
   setUser(userProfile: UserProfile) {
     this.userProfile = userProfile
     localStorage.setItem('username', userProfile.username)
-
-    console.log(localStorage.getItem('username'))
   }
 
   asignUserFromPersistence() {

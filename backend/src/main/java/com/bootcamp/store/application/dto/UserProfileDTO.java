@@ -1,5 +1,7 @@
 package com.bootcamp.store.application.dto;
 
+
+
 import java.io.Serializable;
 
 public class UserProfileDTO implements Serializable {

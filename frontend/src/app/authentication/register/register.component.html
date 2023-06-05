@@ -32,8 +32,8 @@
 
     <!-- Apellido -->
     <div class="form-group">
-        <label for="surname">Nombre de Usuario</label>
-        <input type="text" class="form-control" id="surname" formControlName="surname" placeholder="Apellido">
+        <label for="surname">Apellidos</label>
+        <input type="text" class="form-control" id="surname" formControlName="surname" placeholder="Apellidos">
     </div>
 
     <div *ngIf="(registerForm.get('surname')!.dirty && registerForm.get('surname')!.errors)">
@@ -56,7 +56,7 @@
             Este campo es requerido
         </small>
         <small class="form-text text-danger" *ngIf="registerForm.get('phoneNumber')!.errors!['minlength']">
-            Este campo tiene que tener una longitud mínima de 3 caracteres
+            Este no es un numero de telefono válido
         </small>
     </div>
 

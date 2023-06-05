@@ -4,6 +4,7 @@ import com.bootcamp.store.application.dto.UserAuthDTO;
 import com.bootcamp.store.domain.entity.UserProfile;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
@@ -14,6 +15,9 @@ import java.util.Optional;
 @Repository
 public class UserProfilePersistenceImpl implements UserProfilePersistence {
     private final UserProfileRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserProfilePersistenceImpl(UserProfileRepository userRepository) {
@@ -28,6 +32,7 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
     @Override
     public Optional<UserProfile> saveUserProfile(UserProfile userProfile) {
         if (getUserByUsername(userProfile.getUsername()).isPresent()) return Optional.empty();
+        userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
         return Optional.of(this.userRepository.save(userProfile));
     }
 
@@ -39,8 +44,9 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
     @Override
     public Optional<UserProfile> authenticateUser(UserAuthDTO userAuthDTO) {
         Optional<UserProfile> userProfile = getUserByUsername(userAuthDTO.getUsername());
-        if(userProfile.isPresent()){
-            if (Objects.equals(userProfile.get().getPassword(), userAuthDTO.getPassword())){
+        if (userProfile.isPresent()) {
+            boolean passwordMatch = passwordEncoder.matches(userAuthDTO.getPassword(), userProfile.get().getPassword());
+            if (passwordMatch) {
                 return userProfile;
             }
         }
