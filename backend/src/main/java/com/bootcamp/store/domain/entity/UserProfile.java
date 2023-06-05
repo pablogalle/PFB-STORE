@@ -25,7 +25,7 @@ public class UserProfile {
     private String apellidos;
 
     @Column(length = 9, nullable = false)
-    @Size(max = 9)
+    @Size(min = 9, max = 9)
     private String telephoneNumber;
 
     @Column(length = 100, nullable = false, unique = true)
