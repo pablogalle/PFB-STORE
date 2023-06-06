@@ -46,7 +46,7 @@ export class AuthenticationService {
       this.getUserByUsername(localStorage.getItem('username')!).subscribe(
         response => {
           let data = response.body!
-          this.userProfile = new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password, data.id, data.favouriteItemsIds)
+          this.userProfile = new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password, data.id, data.favouriteItemsIds!)
           console.log(this.userProfile)
         }
       )

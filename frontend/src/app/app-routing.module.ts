@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoryListComponent },
   { path: 'items', component: ItemListComponent },
   { path: 'categories/:categoryId/items', component: ItemListComponent },
+  { path: 'favourites', component: ItemListComponent},
   { path: 'items/:itemId', component: ItemReactiveFormComponent },
   { path: 'categories/:categoryId', component: CategoryFormComponent },
   { path: 'identification', component: IdentificationComponent },

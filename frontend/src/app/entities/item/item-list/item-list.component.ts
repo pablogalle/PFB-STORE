@@ -45,21 +45,43 @@ export class ItemListComponent implements OnInit {
     if (this.route.snapshot.paramMap.get("categoryId")) {
       this.categoryId = +this.route.snapshot.paramMap.get("categoryId")!;
       this.title = "Artículos de la categoría " + this.categoryId;
+      this.getAllItems();
+    } else if (this.route.snapshot.url[0].path == 'favourites') {
+      this.title = "Artículos Favoritos"
+      this.GetFavouriteItems();
+
     } else {
       this.title = "Lista de Artículos"
+      this.getAllItems();
     }
-    this.getAllItems();
+
+  }
+
+  GetFavouriteItems() {
+    if (!this.isUserLoggedIn()) return
+
+    const favItemsIds = this.authenticationService.userProfile!.favouriteItemsIds!
+    console.log(favItemsIds)
+    favItemsIds.forEach(itemId => {
+      this.itemService.getItemById(itemId).subscribe(
+        data => this.items.push(data)
+      )
+    });
+
+
+
+
   }
 
   isUserLoggedIn() {
-    if(this.authenticationService.userProfile) return true
+    if (this.authenticationService.userProfile) return true
     else return false
   }
 
   buildFilters(): string | undefined {
     const filters: string[] = [];
 
-    if(this.categoryId){
+    if (this.categoryId) {
       filters.push("category.id:EQUAL:" + this.categoryId)
     }
     if (this.nameFilter) {
@@ -102,7 +124,7 @@ export class ItemListComponent implements OnInit {
 
   handleError(err: any): void {
     // lo que hariamos si hubiera un error 
-    
+
   }
 
   nextPage() {
@@ -119,23 +141,22 @@ export class ItemListComponent implements OnInit {
     this.getAllItems();
   }
 
-  prepareItemToDelete(itemId: number){
+  prepareItemToDelete(itemId: number) {
     this.itemIdToDelete = itemId;
-
   }
 
-  public deleteItem(){
+  public deleteItem() {
     this.itemService.deleteItem(this.itemIdToDelete!).subscribe({
       next: (data) => {
-        this.showInfoMessage('Articulo Borrado', 'El articulo con id '+this.itemIdToDelete+' ha sido borrado')
+        this.showInfoMessage('Articulo Borrado', 'El articulo con id ' + this.itemIdToDelete + ' ha sido borrado')
         this.getAllItems();
-        
+
       },
-      error: (err) => {this.handleError(err)}
+      error: (err) => { this.handleError(err) }
     })
   }
 
-  showInfoMessage(summary:string, detail: string) {
+  showInfoMessage(summary: string, detail: string) {
     this.messageService.add({ severity: 'info', summary: summary, detail: detail });
   }
 
@@ -150,8 +171,8 @@ export class ItemListComponent implements OnInit {
     )
   }
 
-  isItemFav(itemId: number){
-    if(this.authenticationService.userProfile!.favouriteItemsIds!.indexOf(itemId) > -1)  return true
+  isItemFav(itemId: number) {
+    if (this.authenticationService.userProfile!.favouriteItemsIds!.indexOf(itemId) > -1) return true
     return false
   }
 }
