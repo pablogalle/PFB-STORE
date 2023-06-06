@@ -14,8 +14,10 @@
         </div>
 
         <div class="col-12 col-md-3">
-            <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Filtrar <i class="pi pi-filter"></i></button>
-            <button class="btn btn-success" [routerLink]="['/items','new']">Nuevo Articulo <i class="pi pi-plus"></i></button>
+            <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Filtrar <i
+                    class="pi pi-filter"></i></button>
+            <button class="btn btn-success" [routerLink]="['/items','new']">Nuevo Articulo <i
+                    class="pi pi-plus"></i></button>
         </div>
     </div>
 </form>
@@ -44,7 +46,10 @@
                 <button class="btn btn-warning" id="btnEditItem" [routerLink]="['/items',item.id]">
                     <i class="pi pi-pencil"></i></button>
                 <button class="btn btn-danger" id="btnDeleteItem" data-bs-toggle="modal"
-                    data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"><i class="pi pi-trash"></i></button>
+                    data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"><i
+                        class="pi pi-trash"></i></button>
+                <button *ngIf="isUserLoggedIn()" class="btn" id="btnFavouriteItem">
+                    <i class="pi pi-star"></i></button>
             </td>
         </tr>
     </tbody>

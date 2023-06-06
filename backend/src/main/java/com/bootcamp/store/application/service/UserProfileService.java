@@ -12,4 +12,6 @@ public interface UserProfileService {
     List<UserProfileDTO> getAllUsers();
 
     Optional<UserProfileDTO> authenticateUser(UserAuthDTO userAuthDTO);
+
+    UserProfileDTO addFavouriteItem(Long userId, Long itemId);
 }

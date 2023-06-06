@@ -4,6 +4,7 @@ import { ItemService } from '../service/item.service';
 import { Item } from '../modelo/item.model';
 import { filter } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 
 @Component({
   selector: 'app-item-list',
@@ -18,7 +19,7 @@ export class ItemListComponent implements OnInit {
   items: Item[] = [];
 
   page: number = 0;
-  size: number = 2;
+  size: number = 5;
   sort: string = "name,asc";
 
   first: boolean = false;
@@ -29,14 +30,19 @@ export class ItemListComponent implements OnInit {
   nameFilter?: string;
   priceFilter?: number;
 
+  userLoggedIn = false;
+
   itemIdToDelete?: number;
 
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.isUserLoggedIn()
+
     if (this.route.snapshot.paramMap.get("categoryId")) {
       this.categoryId = +this.route.snapshot.paramMap.get("categoryId")!;
       this.title = "Artículos de la categoría " + this.categoryId;
@@ -44,6 +50,11 @@ export class ItemListComponent implements OnInit {
       this.title = "Lista de Artículos"
     }
     this.getAllItems();
+  }
+
+  isUserLoggedIn() {
+    if(this.authenticationService.userProfile) return true
+    else return false
   }
 
   buildFilters(): string | undefined {
@@ -129,3 +140,5 @@ export class ItemListComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: summary, detail: detail });
   }
 }
+
+
