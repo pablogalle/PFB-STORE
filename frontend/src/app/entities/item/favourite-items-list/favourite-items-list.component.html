@@ -1,0 +1,32 @@
+<h1>Favourite Items</h1>
+<table *ngIf="items.length > 0">
+    <thead>
+        <th>Id</th>
+        <th>Imagen</th>
+        <th>Articulo</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td>{{ item.id }}</td>
+            <td>
+                <img class="imgItem" [src]="'data:image/webp;base64,'+item.image" alt="">
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{item.categoryName}}</td>
+            <td>{{ item.price | currency:'EUR'}}</td>
+
+            <td>
+                <button class="btn btn-warning" id="btnEditItem" [routerLink]="['/items',item.id]">
+                    <i class="pi pi-pencil"></i></button>
+            
+                <button class="btn" id="btnFavouriteItem" (click)="toggleFavourite(item.id!)">
+                    <i class="pi pi-star" *ngIf="!isItemFav(item.id!)" ></i>
+                    <i class="pi pi-star-fill" *ngIf="isItemFav(item.id!)"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

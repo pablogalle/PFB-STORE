@@ -46,30 +46,10 @@ export class ItemListComponent implements OnInit {
       this.categoryId = +this.route.snapshot.paramMap.get("categoryId")!;
       this.title = "Artículos de la categoría " + this.categoryId;
       this.getAllItems();
-    } else if (this.route.snapshot.url[0].path == 'favourites') {
-      this.title = "Artículos Favoritos"
-      this.GetFavouriteItems();
-
     } else {
       this.title = "Lista de Artículos"
       this.getAllItems();
     }
-
-  }
-
-  GetFavouriteItems() {
-    if (!this.isUserLoggedIn()) return
-
-    const favItemsIds = this.authenticationService.userProfile!.favouriteItemsIds!
-    console.log(favItemsIds)
-    favItemsIds.forEach(itemId => {
-      this.itemService.getItemById(itemId).subscribe(
-        data => this.items.push(data)
-      )
-    });
-
-
-
 
   }
 

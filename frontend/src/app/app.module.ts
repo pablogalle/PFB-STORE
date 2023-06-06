@@ -21,6 +21,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { IdentificationComponent } from './authentication/identification/identification.component';
 import { RegisterComponent } from './authentication/register/register.component';
+import { FavouriteItemsListComponent } from './entities/item/favourite-items-list/favourite-items-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RegisterComponent } from './authentication/register/register.component'
     ItemFormComponent,
     ItemReactiveFormComponent,
     IdentificationComponent,
-    RegisterComponent
+    RegisterComponent,
+    FavouriteItemsListComponent
   ],
   imports: [
     BrowserModule,
