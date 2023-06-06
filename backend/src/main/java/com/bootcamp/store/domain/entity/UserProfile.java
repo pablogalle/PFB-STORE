@@ -3,7 +3,6 @@ package com.bootcamp.store.domain.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -37,20 +36,20 @@ public class UserProfile {
     @Size(min = 5, max = 100)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
-    private List<Item> favourites;
+    private List<Item> favouriteItems;
 
 
     public UserProfile() {
     }
 
-    public List<Item> getFavourites() {
-        return favourites;
+    public List<Item> getFavouriteItems() {
+        return favouriteItems;
     }
 
-    public void setFavourites(List<Item> favourites) {
-        this.favourites = favourites;
+    public void setFavouriteItems(List<Item> favouriteItems) {
+        this.favouriteItems = favouriteItems;
     }
 
     public long getId() {

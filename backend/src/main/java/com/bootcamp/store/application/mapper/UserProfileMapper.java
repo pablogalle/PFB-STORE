@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = ItemMapper.class)
 public interface UserProfileMapper extends EntityMapper<UserProfileDTO, UserProfile> {
     @Override
-    @Mapping(source = "favourites", target = "favouriteItemsIds")
+    @Mapping(source = "favouriteItems", target = "favouriteItemsIds")
     UserProfileDTO toDto(UserProfile entity);
 
     @Override
-    @Mapping(source = "favouriteItemsIds", target = "favourites")
+    @Mapping(source = "favouriteItemsIds", target = "favouriteItems")
     UserProfile toEntity(UserProfileDTO dto);
 }
