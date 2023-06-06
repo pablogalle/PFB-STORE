@@ -48,8 +48,10 @@
                 <button class="btn btn-danger" id="btnDeleteItem" data-bs-toggle="modal"
                     data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"><i
                         class="pi pi-trash"></i></button>
-                <button *ngIf="isUserLoggedIn()" class="btn" id="btnFavouriteItem">
-                    <i class="pi pi-star"></i></button>
+                <button *ngIf="isUserLoggedIn()" class="btn" id="btnFavouriteItem" (click)="toggleFavourite(item.id!)">
+                    <i class="pi pi-star" *ngIf="!isItemFav(item.id!)" ></i>
+                    <i class="pi pi-star-fill" *ngIf="isItemFav(item.id!)"></i>
+                </button>
             </td>
         </tr>
     </tbody>

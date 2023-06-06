@@ -56,8 +56,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         Optional<UserProfileDTO> userProfileDTOOpt = this.persistence.getUserById(userId).map(mapper::toDto);
         if (userProfileDTOOpt.isPresent()) {
             UserProfileDTO userProfileDTO = userProfileDTOOpt.get();
-            userProfileDTO.getFavouriteItemsIds().add(itemId);
+            if (!userProfileDTO.getFavouriteItemsIds().contains(itemId)) userProfileDTO.getFavouriteItemsIds().add(itemId);
+            else userProfileDTO.getFavouriteItemsIds().remove(itemId);
             return mapper.toDto(this.persistence.updateUserProfile(this.mapper.toEntity(userProfileDTO)));
+
         }
         return null;
     }

@@ -12,7 +12,6 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
-
   categoryId?: number;
   title: string = "";
 
@@ -138,6 +137,22 @@ export class ItemListComponent implements OnInit {
 
   showInfoMessage(summary:string, detail: string) {
     this.messageService.add({ severity: 'info', summary: summary, detail: detail });
+  }
+
+  toggleFavourite(id: number) {
+    this.authenticationService.addFavouriteItem(id).subscribe(
+      next => {
+        this.authenticationService.userProfile!.favouriteItemsIds = next.favouriteItemsIds
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
+  isItemFav(itemId: number){
+    if(this.authenticationService.userProfile!.favouriteItemsIds!.indexOf(itemId) > -1)  return true
+    return false
   }
 }
 
