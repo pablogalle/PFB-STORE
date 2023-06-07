@@ -10,11 +10,11 @@ public interface ShoppingCartMapper extends EntityMapper<ShoppingCartDTO, Shoppi
 
     @Override
     @Mapping(source = "user", target = "user")
-    @Mapping(source = "items", target = "items")
+    @Mapping(source = "cartItems", target = "cartItems")
     ShoppingCartDTO toDto(ShoppingCart entity);
 
     @Override
     @Mapping(source = "user", target = "user")
-    @Mapping(source = "items", target = "items")
+    @Mapping(source = "cartItems", target = "cartItems")
     ShoppingCart toEntity(ShoppingCartDTO dto);
 }
