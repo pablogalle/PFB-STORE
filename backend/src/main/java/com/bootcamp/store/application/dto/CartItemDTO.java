@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class CartItemDTO implements Serializable {
     private Long id;
+    private Long shoppingCartId;
     private ItemDTO item;
     private int quantity;
 
@@ -32,5 +33,13 @@ public class CartItemDTO implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getShoppingCartId() {
+        return shoppingCartId;
+    }
+
+    public void setShoppingCartId(Long shoppingCartId) {
+        this.shoppingCartId = shoppingCartId;
     }
 }
