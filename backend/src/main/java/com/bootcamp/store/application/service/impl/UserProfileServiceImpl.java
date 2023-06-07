@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +30,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public Optional<UserProfileDTO> getUserByUsername(String username) {
-        return this.persistence.getUserByUsername(username).map(mapper :: toDto );
+        return this.persistence.getUserByUsername(username).map(mapper::toDto);
     }
 
     @Override
     public Optional<UserProfileDTO> saveUserProfile(UserProfileDTO userProfileDTO) {
         //encode pass
-        return this.persistence.saveUserProfile(this.mapper.toEntity(userProfileDTO)).map(mapper :: toDto );
+        return this.persistence.saveUserProfile(this.mapper.toEntity(userProfileDTO)).map(mapper::toDto);
 
     }
 
@@ -47,6 +48,19 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public Optional<UserProfileDTO> authenticateUser(UserAuthDTO userAuthDTO) {
-        return this.persistence.authenticateUser(userAuthDTO).map(mapper :: toDto );
+        return this.persistence.authenticateUser(userAuthDTO).map(mapper::toDto);
+    }
+
+    @Override
+    public UserProfileDTO addFavouriteItem(Long userId, Long itemId) {
+        Optional<UserProfileDTO> userProfileDTOOpt = this.persistence.getUserById(userId).map(mapper::toDto);
+        if (userProfileDTOOpt.isPresent()) {
+            UserProfileDTO userProfileDTO = userProfileDTOOpt.get();
+            if (!userProfileDTO.getFavouriteItemsIds().contains(itemId)) userProfileDTO.getFavouriteItemsIds().add(itemId);
+            else userProfileDTO.getFavouriteItemsIds().remove(itemId);
+            return mapper.toDto(this.persistence.updateUserProfile(this.mapper.toEntity(userProfileDTO)));
+
+        }
+        return null;
     }
 }

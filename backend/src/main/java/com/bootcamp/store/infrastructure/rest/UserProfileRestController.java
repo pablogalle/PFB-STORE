@@ -35,7 +35,7 @@ public class UserProfileRestController {
     ResponseEntity<UserProfileDTO> getUserByUsername(@PathVariable String username) {
         Optional<UserProfileDTO> user = this.userProfileService.getUserByUsername(username);
 
-        if (user.isPresent()) return new ResponseEntity<UserProfileDTO>(user.get(), HttpStatus.OK);
+        if (user.isPresent()) return new ResponseEntity<>(user.get(), HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -53,9 +53,18 @@ public class UserProfileRestController {
     ResponseEntity<UserProfileDTO> authenticateUser(@RequestBody UserAuthDTO userAuthDTO) {
         Optional<UserProfileDTO> userProfileDTO = this.userProfileService.authenticateUser(userAuthDTO);
 
-        if (userProfileDTO.isPresent()) return new ResponseEntity<UserProfileDTO>(userProfileDTO.get(), HttpStatus.OK);
+        if (userProfileDTO.isPresent()) return new ResponseEntity<>(userProfileDTO.get(), HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    @CrossOrigin
+    @PatchMapping(value = "/users/{userId}/favourites/{itemId}")
+    ResponseEntity<UserProfileDTO> addFavouriteItem(@PathVariable Long userId, @PathVariable Long itemId) {
+        UserProfileDTO userProfileDTO = this.userProfileService.addFavouriteItem(userId, itemId);
+
+        if (userProfileDTO != null) return new ResponseEntity<>(userProfileDTO, HttpStatus.OK);
+
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
 }

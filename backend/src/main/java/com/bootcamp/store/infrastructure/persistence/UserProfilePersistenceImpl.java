@@ -1,6 +1,7 @@
 package com.bootcamp.store.infrastructure.persistence;
 
 import com.bootcamp.store.application.dto.UserAuthDTO;
+import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.domain.entity.UserProfile;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,15 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<UserProfile> getUserById(Long userId) {
+        return this.userRepository.findById(userId);
+    }
+
+    @Override
+    public UserProfile updateUserProfile(UserProfile userProfile) {
+        return userRepository.save(userProfile);
     }
 }
