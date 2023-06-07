@@ -7,6 +7,7 @@ export class UserProfile{
     telephoneNumber: string;
     email: string;
     password: string;
+    favouriteItemsIds?: number[]
 
     constructor(
         username: string,
@@ -16,6 +17,7 @@ export class UserProfile{
         email: string,
         password: string,
         id?: number,
+        favouriteItemsIds?: number[]
     ) {
         this.id = id
         this.username = username
@@ -24,6 +26,7 @@ export class UserProfile{
         this.telephoneNumber = telephoneNumber
         this.email = email
         this.password = password
+        this.favouriteItemsIds = favouriteItemsIds
     }
 
     

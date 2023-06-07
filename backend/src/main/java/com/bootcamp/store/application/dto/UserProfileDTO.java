@@ -3,6 +3,7 @@ package com.bootcamp.store.application.dto;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserProfileDTO implements Serializable {
     private long Id;
@@ -12,8 +13,17 @@ public class UserProfileDTO implements Serializable {
     private String telephoneNumber;
     private String email;
     private String password;
+    private List<Long> favouriteItemsIds;
 
     public UserProfileDTO() {
+    }
+
+    public List<Long> getFavouriteItemsIds() {
+        return favouriteItemsIds;
+    }
+
+    public void setFavouriteItemsIds(List<Long> favouriteItemsIds) {
+        this.favouriteItemsIds = favouriteItemsIds;
     }
 
     public long getId() {

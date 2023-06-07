@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
       response => {
         if(response.status == HttpStatusCode.Created){
           let data = response.body!
-          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password))
+          this.authenticationService.setUser(new UserProfile(data.username, data.name, data.apellidos, data.telephoneNumber, data.email, data.password, data.id, data.favouriteItemsIds))
           this.router.navigate(['/categories']) 
         }
         else if(response.status == HttpStatusCode.Conflict) this.showErrorMessage("Usuario ya Existente", "Ya existe una cuenta con ese nombre de usuario")
