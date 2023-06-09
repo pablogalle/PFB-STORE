@@ -43,7 +43,7 @@ public class UserProfile {
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "item_id")
     private List<Item> favouriteItems;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
 

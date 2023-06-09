@@ -7,6 +7,7 @@ import { CategoryFormComponent } from './entities/category/category-form/categor
 import { IdentificationComponent } from './authentication/identification/identification.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { FavouriteItemsListComponent } from './entities/item/favourite-items-list/favourite-items-list.component';
+import { ShoppingCartListComponent } from './entities/shoppingCart/shopping-cart-list/shopping-cart-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'items/:itemId', component: ItemReactiveFormComponent },
   { path: 'categories/:categoryId', component: CategoryFormComponent },
   { path: 'identification', component: IdentificationComponent },
-  { path: 'identification/register', component: RegisterComponent }
+  { path: 'identification/register', component: RegisterComponent },
+  { path: 'cart', component: ShoppingCartListComponent }
 ];
 
 @NgModule({

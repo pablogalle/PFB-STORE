@@ -44,7 +44,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartDTO addItemToCartByUserId(Long userId, ItemDTO itemDTO) {
         CartItemDTO cartItemDTO = new CartItemDTO();
-        cartItemDTO.setItem(itemDTO);
+        cartItemDTO.setItemId(itemDTO.getId());
+        cartItemDTO.setItemName(itemDTO.getName());
+        cartItemDTO.setItemPrice(itemDTO.getPrice());
+        cartItemDTO.setItemImage(itemDTO.getImage());
+        cartItemDTO.setItemCategoryName(itemDTO.getCategoryName());
+        cartItemDTO.setQuantity(1);
         return mapper.toDto(persistence.addItemToCartByUserId(userId, cartItemMapper.toEntity(cartItemDTO)));
     }
 }

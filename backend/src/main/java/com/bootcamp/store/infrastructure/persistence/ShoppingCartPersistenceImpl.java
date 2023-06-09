@@ -1,7 +1,5 @@
 package com.bootcamp.store.infrastructure.persistence;
 
-import com.bootcamp.store.application.dto.CartItemDTO;
-import com.bootcamp.store.application.dto.ItemDTO;
 import com.bootcamp.store.domain.entity.CartItem;
 import com.bootcamp.store.domain.entity.ShoppingCart;
 import com.bootcamp.store.domain.entity.UserProfile;
@@ -17,10 +15,12 @@ import java.util.Optional;
 public class ShoppingCartPersistenceImpl implements ShoppingCartPersistence {
 
     private final ShoppingCartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
 
     @Autowired
-    public ShoppingCartPersistenceImpl(ShoppingCartRepository cartRepository){
+    public ShoppingCartPersistenceImpl(ShoppingCartRepository cartRepository, CartItemRepository cartItemRepository){
         this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
     @Override
@@ -53,17 +53,18 @@ public class ShoppingCartPersistenceImpl implements ShoppingCartPersistence {
     public ShoppingCart addItemToCartByUserId(Long userId, CartItem cartItem) {
         Optional<ShoppingCart> cart = getShoppingCartByUserId(userId);
         if (cart.isPresent()){
-            if (!cart.get().getCartItems().contains(cartItem)){
-                cart.get().getCartItems().add(cartItem);
-                cartRepository.save(cart.get());
-
-            }
-            return saveCart(cart.get());
+            cartItem.setShoppingCart(cart.get());
+            return saveCart(cart.get(), cartItem);
         }
         return new ShoppingCart();
     }
 
-    private ShoppingCart saveCart(ShoppingCart shoppingCart) {
-        return null;
+    private ShoppingCart saveCart(ShoppingCart shoppingCart, CartItem cartItem) {
+        List<CartItem> cartItemList = shoppingCart.getCartItems();
+        boolean containsItem = cartItemList.stream().anyMatch(o -> o.getItem().getId().equals(cartItem.getItem().getId()));
+        if (!containsItem){
+            shoppingCart.getCartItems().add(cartItemRepository.save(cartItem));
+        }
+        return cartRepository.save(shoppingCart);
     }
 }

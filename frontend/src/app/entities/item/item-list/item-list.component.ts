@@ -5,6 +5,7 @@ import { Item } from '../modelo/item.model';
 import { filter } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { CartService } from '../../shoppingCart/service/cart.service';
 
 @Component({
   selector: 'app-item-list',
@@ -12,6 +13,7 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
+
   categoryId?: number;
   title: string = "";
 
@@ -37,7 +39,8 @@ export class ItemListComponent implements OnInit {
     private route: ActivatedRoute,
     private itemService: ItemService,
     private messageService: MessageService,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.isUserLoggedIn()
@@ -154,6 +157,15 @@ export class ItemListComponent implements OnInit {
   isItemFav(itemId: number) {
     if (this.authenticationService.userProfile!.favouriteItemsIds!.indexOf(itemId) > -1) return true
     return false
+  }
+
+  addItemToCart(item: Item) {
+    let userId = this.authenticationService.userProfile!.id!;
+    this.cartService.addItemToCart(item, userId).subscribe(
+      response => {
+        console.log(response)
+      }
+    );
   }
 }
 

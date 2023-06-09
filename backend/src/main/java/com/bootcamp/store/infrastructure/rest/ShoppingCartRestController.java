@@ -46,6 +46,9 @@ public class ShoppingCartRestController {
     @PostMapping(value = "/users/{userId}/cart/addItem", consumes = "application/json", produces = "application/json")
     ResponseEntity<ShoppingCartDTO> addItemToCart(@PathVariable Long userId, @RequestBody ItemDTO itemDTO){
         ShoppingCartDTO cart = cartService.addItemToCartByUserId(userId, itemDTO);
+        if (cart.equals(new ShoppingCartDTO())) return new ResponseEntity<>(HttpStatus.CONFLICT);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+
+
 }
