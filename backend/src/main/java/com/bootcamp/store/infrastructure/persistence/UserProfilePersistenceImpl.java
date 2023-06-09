@@ -3,6 +3,7 @@ package com.bootcamp.store.infrastructure.persistence;
 import com.bootcamp.store.application.dto.UserAuthDTO;
 import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.domain.entity.UserProfile;
+import com.bootcamp.store.domain.persistence.ShoppingCartPersistence;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,13 +17,15 @@ import java.util.Optional;
 @Repository
 public class UserProfilePersistenceImpl implements UserProfilePersistence {
     private final UserProfileRepository userRepository;
+    private final ShoppingCartPersistence cartPersistence;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserProfilePersistenceImpl(UserProfileRepository userRepository) {
+    public UserProfilePersistenceImpl(UserProfileRepository userRepository, ShoppingCartPersistence cartPersistence) {
         this.userRepository = userRepository;
+        this.cartPersistence = cartPersistence;
     }
 
     @Override
@@ -34,7 +37,9 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
     public Optional<UserProfile> saveUserProfile(UserProfile userProfile) {
         if (getUserByUsername(userProfile.getUsername()).isPresent()) return Optional.empty();
         userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
-        return Optional.of(this.userRepository.save(userProfile));
+        UserProfile profile = this.userRepository.save(userProfile);
+        profile.setShoppingCart(cartPersistence.createShoppingCartByUserId(profile.getId()));
+        return Optional.of(this.userRepository.save(profile));
     }
 
     @Override

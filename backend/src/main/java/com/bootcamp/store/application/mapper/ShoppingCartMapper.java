@@ -9,12 +9,26 @@ import org.mapstruct.Mapping;
 public interface ShoppingCartMapper extends EntityMapper<ShoppingCartDTO, ShoppingCart> {
 
     @Override
-    @Mapping(source = "user", target = "user")
+    @Mapping(source = "user.id", target = "user")
     @Mapping(source = "cartItems", target = "cartItems")
     ShoppingCartDTO toDto(ShoppingCart entity);
 
     @Override
-    @Mapping(source = "user", target = "user")
+    @Mapping(source = "user", target = "user.id")
     @Mapping(source = "cartItems", target = "cartItems")
     ShoppingCart toEntity(ShoppingCartDTO dto);
+
+    default ShoppingCart fromId(Long id){
+        var cart = new ShoppingCart();
+
+        if (id == null) return null;
+        cart.setId(id);
+        return cart;
+    }
+
+    default Long toId ( ShoppingCart cart){
+        if (cart == null) return null;
+
+        return cart.getId();
+    }
 }

@@ -1,7 +1,5 @@
 package com.bootcamp.store.infrastructure.rest;
 
-import com.bootcamp.store.application.dto.CategoryDTO;
-import com.bootcamp.store.application.dto.ItemDTO;
 import com.bootcamp.store.application.dto.UserAuthDTO;
 import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.application.service.UserProfileService;
