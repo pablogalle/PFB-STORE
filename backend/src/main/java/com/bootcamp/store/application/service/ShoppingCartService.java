@@ -14,4 +14,8 @@ public interface ShoppingCartService {
     Optional<ShoppingCartDTO> getShoppingCartByUserId(Long userId);
 
     ShoppingCartDTO addItemToCartByUserId(Long userId, ItemDTO itemDTO);
+
+    void deleteItemFromCart(Long userId, Long cartItemId);
+
+    void asignQuantityToCartItem(Long userId, Long cartItemId, Integer quantity);
 }

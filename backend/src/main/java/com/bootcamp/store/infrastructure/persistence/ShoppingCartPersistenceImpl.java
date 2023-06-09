@@ -18,7 +18,7 @@ public class ShoppingCartPersistenceImpl implements ShoppingCartPersistence {
     private final CartItemRepository cartItemRepository;
 
     @Autowired
-    public ShoppingCartPersistenceImpl(ShoppingCartRepository cartRepository, CartItemRepository cartItemRepository){
+    public ShoppingCartPersistenceImpl(ShoppingCartRepository cartRepository, CartItemRepository cartItemRepository) {
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
     }
@@ -27,7 +27,7 @@ public class ShoppingCartPersistenceImpl implements ShoppingCartPersistence {
     @Transactional
     public Optional<ShoppingCart> getShoppingCartById(Long id) {
         Optional<ShoppingCart> shoppingCartOptional = this.cartRepository.findById(id);
-        if (shoppingCartOptional.isPresent()){
+        if (shoppingCartOptional.isPresent()) {
             List<CartItem> cartItemList = shoppingCartOptional.get().getCartItems().stream().toList();
             shoppingCartOptional.get().setCartItems(cartItemList);
         }
@@ -52,17 +52,55 @@ public class ShoppingCartPersistenceImpl implements ShoppingCartPersistence {
     @Override
     public ShoppingCart addItemToCartByUserId(Long userId, CartItem cartItem) {
         Optional<ShoppingCart> cart = getShoppingCartByUserId(userId);
-        if (cart.isPresent()){
+        if (cart.isPresent()) {
             cartItem.setShoppingCart(cart.get());
             return saveCart(cart.get(), cartItem);
         }
         return new ShoppingCart();
     }
 
+    @Override
+    public void deleteItemFromCart(Long userId, Long cartItemId) {
+        /*Optional<ShoppingCart> shoppingCart = getShoppingCartByUserId(userId);
+        if (shoppingCart.isPresent()){
+            shoppingCart.get().getCartItems().stream()
+        }*/
+        cartItemRepository.deleteById(cartItemId);
+    }
+
+    @Override
+    public void asignQuantityToCartItem(Long userId, Long cartItemId, Integer quantity) {
+        if (quantity <= 0) {
+            deleteItemFromCart(userId, cartItemId);
+            return;
+        }
+
+        Optional<ShoppingCart> shoppingCart = getShoppingCartByUserId(userId);
+        if (shoppingCart.isPresent()) {
+            List<CartItem> cartItemsList = shoppingCart.get().getCartItems();
+            Optional<CartItem> item = cartItemsList.stream().filter(o -> o.getId().equals(cartItemId)).findFirst();
+            if (item.isPresent()) {
+                CartItem cartItem = item.get();
+                cartItem.setQuantity(quantity);
+                cartItemRepository.save(cartItem);
+
+            }
+        }
+    }
+
+    @Override
+    public void updateUser(UserProfile updatedUserProfile) {
+        Optional<ShoppingCart> shoppingCart = getShoppingCartById(updatedUserProfile.getShoppingCart().getId());
+        if (shoppingCart.isPresent()){
+            shoppingCart.get().setUser(updatedUserProfile);
+            cartRepository.save(shoppingCart.get());
+        }
+    }
+
     private ShoppingCart saveCart(ShoppingCart shoppingCart, CartItem cartItem) {
         List<CartItem> cartItemList = shoppingCart.getCartItems();
         boolean containsItem = cartItemList.stream().anyMatch(o -> o.getItem().getId().equals(cartItem.getItem().getId()));
-        if (!containsItem){
+        if (!containsItem) {
             shoppingCart.getCartItems().add(cartItemRepository.save(cartItem));
         }
         return cartRepository.save(shoppingCart);
