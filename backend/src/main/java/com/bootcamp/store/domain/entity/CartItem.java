@@ -1,6 +1,7 @@
 package com.bootcamp.store.domain.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class CartItem {
@@ -16,7 +17,8 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
-
+    @Column
+    @Positive
     private int quantity;
 
     public CartItem() {

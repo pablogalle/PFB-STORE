@@ -5,8 +5,15 @@ import java.io.Serializable;
 public class CartItemDTO implements Serializable {
     private Long id;
     private Long shoppingCartId;
-    private ItemDTO item;
     private int quantity;
+
+    //Item Data
+    private Long itemId;
+    private String itemName;
+    private Double itemPrice;
+    private byte[] itemImage;
+    private String itemCategoryName;
+
 
     public CartItemDTO() {
     }
@@ -17,14 +24,6 @@ public class CartItemDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ItemDTO getItem() {
-        return item;
-    }
-
-    public void setItem(ItemDTO item) {
-        this.item = item;
     }
 
     public int getQuantity() {
@@ -41,5 +40,45 @@ public class CartItemDTO implements Serializable {
 
     public void setShoppingCartId(Long shoppingCartId) {
         this.shoppingCartId = shoppingCartId;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public Double getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(Double itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public byte[] getItemImage() {
+        return itemImage;
+    }
+
+    public void setItemImage(byte[] itemImage) {
+        this.itemImage = itemImage;
+    }
+
+    public String getItemCategoryName() {
+        return itemCategoryName;
+    }
+
+    public void setItemCategoryName(String itemCategoryName) {
+        this.itemCategoryName = itemCategoryName;
     }
 }

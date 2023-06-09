@@ -19,10 +19,10 @@
             <td>{{ item.price | currency:'EUR'}}</td>
 
             <td>
-                <button class="btn btn-warning" id="btnEditItem" [routerLink]="['/items',item.id]">
+                <button class="btn btn-secondary" id="btnEditItem" [routerLink]="['/items',item.id]">
                     <i class="pi pi-pencil"></i></button>
             
-                <button class="btn" id="btnFavouriteItem" (click)="toggleFavourite(item.id!)">
+                <button class="btn btn-warning" id="btnFavouriteItem" (click)="toggleFavourite(item.id!)">
                     <i class="pi pi-star" *ngIf="!isItemFav(item.id!)" ></i>
                     <i class="pi pi-star-fill" *ngIf="isItemFav(item.id!)"></i>
                 </button>

@@ -1,13 +1,12 @@
 package com.bootcamp.store.application.dto;
 
-import com.bootcamp.store.domain.entity.UserProfile;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class ShoppingCartDTO implements Serializable {
     private Long id;
-    private UserProfileDTO user;
+    private Long user;
     private List<CartItemDTO> cartItems;
 
     public ShoppingCartDTO() {
@@ -21,11 +20,11 @@ public class ShoppingCartDTO implements Serializable {
         this.id = id;
     }
 
-    public UserProfileDTO getUser() {
+    public Long getUser() {
         return user;
     }
 
-    public void setUser(UserProfileDTO user) {
+    public void setUser(Long user) {
         this.user = user;
     }
 

@@ -1,6 +1,9 @@
 package com.bootcamp.store.domain.entity;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,11 +15,13 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cartSequence")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserProfile user;
 
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "shoppingCart")
     private List<CartItem> cartItems;
 
     public ShoppingCart() {

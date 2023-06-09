@@ -3,7 +3,9 @@ package com.bootcamp.store.infrastructure.persistence;
 import com.bootcamp.store.application.dto.UserAuthDTO;
 import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.domain.entity.UserProfile;
+import com.bootcamp.store.domain.persistence.ShoppingCartPersistence;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -16,13 +18,15 @@ import java.util.Optional;
 @Repository
 public class UserProfilePersistenceImpl implements UserProfilePersistence {
     private final UserProfileRepository userRepository;
+    private final ShoppingCartPersistence cartPersistence;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserProfilePersistenceImpl(UserProfileRepository userRepository) {
+    public UserProfilePersistenceImpl(UserProfileRepository userRepository, ShoppingCartPersistence cartPersistence) {
         this.userRepository = userRepository;
+        this.cartPersistence = cartPersistence;
     }
 
     @Override
@@ -34,7 +38,9 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
     public Optional<UserProfile> saveUserProfile(UserProfile userProfile) {
         if (getUserByUsername(userProfile.getUsername()).isPresent()) return Optional.empty();
         userProfile.setPassword(passwordEncoder.encode(userProfile.getPassword()));
-        return Optional.of(this.userRepository.save(userProfile));
+        UserProfile profile = this.userRepository.save(userProfile);
+        profile.setShoppingCart(cartPersistence.createShoppingCartByUserId(profile.getId()));
+        return Optional.of(this.userRepository.save(profile));
     }
 
     @Override
@@ -61,6 +67,8 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
 
     @Override
     public UserProfile updateUserProfile(UserProfile userProfile) {
-        return userRepository.save(userProfile);
+        UserProfile updatedUserProfile = userRepository.save(userProfile);
+        cartPersistence.updateUser(updatedUserProfile);
+        return updatedUserProfile;
     }
 }

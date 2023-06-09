@@ -14,6 +14,7 @@ public class UserProfileDTO implements Serializable {
     private String email;
     private String password;
     private List<Long> favouriteItemsIds;
+    private Long shoppingCartId;
 
     public UserProfileDTO() {
     }
@@ -80,5 +81,13 @@ public class UserProfileDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getShoppingCartId() {
+        return shoppingCartId;
+    }
+
+    public void setShoppingCartId(Long shoppingCartId) {
+        this.shoppingCartId = shoppingCartId;
     }
 }

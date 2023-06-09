@@ -59,7 +59,6 @@ public class UserProfileServiceImpl implements UserProfileService {
             if (!userProfileDTO.getFavouriteItemsIds().contains(itemId)) userProfileDTO.getFavouriteItemsIds().add(itemId);
             else userProfileDTO.getFavouriteItemsIds().remove(itemId);
             return mapper.toDto(this.persistence.updateUserProfile(this.mapper.toEntity(userProfileDTO)));
-
         }
         return null;
     }
