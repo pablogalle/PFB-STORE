@@ -8,8 +8,8 @@ import { CartItem } from '../model/CartItem.model';
   templateUrl: './shopping-cart-list.component.html',
   styleUrls: ['./shopping-cart-list.component.scss']
 })
-export class ShoppingCartListComponent implements OnInit{
-  
+export class ShoppingCartListComponent implements OnInit {
+
   cartItems: CartItem[] = []
 
 
@@ -17,14 +17,14 @@ export class ShoppingCartListComponent implements OnInit{
   constructor(
     private cartService: CartService,
     private authService: AuthenticationService
-  ){}
-  
+  ) { }
+
   ngOnInit(): void {
     this.getCartItems();
   }
-  
+
   getCartItems() {
-    if(this.authService.userProfile){
+    if (this.authService.userProfile) {
       this.cartService.getCartByUserId(this.authService.userProfile.id!).subscribe(
         data => {
           this.cartItems = data.body!.cartItems

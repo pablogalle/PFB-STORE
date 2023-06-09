@@ -49,6 +49,18 @@ public class ShoppingCartRestController {
         if (cart.equals(new ShoppingCartDTO())) return new ResponseEntity<>(HttpStatus.CONFLICT);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+    @CrossOrigin
+    @DeleteMapping(value = "/users/{userId}/cart/{cartItemId}")
+    ResponseEntity<?> deleteItemFromCartById(@PathVariable Long userId, @PathVariable Long cartItemId){
+        this.cartService.deleteItemFromCart(userId, cartItemId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @CrossOrigin
+    @PatchMapping(value = "/users/{userId}/cart/{cartItemId}/{quantity}")
+    ResponseEntity<?> asignQuantityItemId(@PathVariable Long userId, @PathVariable Long cartItemId,@PathVariable Integer quantity){
+        this.cartService.asignQuantityToCartItem(userId, cartItemId, quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

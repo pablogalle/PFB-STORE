@@ -5,6 +5,7 @@ import com.bootcamp.store.application.dto.UserProfileDTO;
 import com.bootcamp.store.domain.entity.UserProfile;
 import com.bootcamp.store.domain.persistence.ShoppingCartPersistence;
 import com.bootcamp.store.domain.persistence.UserProfilePersistence;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -66,6 +67,8 @@ public class UserProfilePersistenceImpl implements UserProfilePersistence {
 
     @Override
     public UserProfile updateUserProfile(UserProfile userProfile) {
-        return userRepository.save(userProfile);
+        UserProfile updatedUserProfile = userRepository.save(userProfile);
+        cartPersistence.updateUser(updatedUserProfile);
+        return updatedUserProfile;
     }
 }

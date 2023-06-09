@@ -52,4 +52,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemDTO.setQuantity(1);
         return mapper.toDto(persistence.addItemToCartByUserId(userId, cartItemMapper.toEntity(cartItemDTO)));
     }
+
+    @Override
+    public void deleteItemFromCart(Long userId, Long cartItemId) {
+        persistence.deleteItemFromCart(userId, cartItemId);
+    }
+
+    @Override
+    public void asignQuantityToCartItem(Long userId, Long cartItemId, Integer quantity) {
+        persistence.asignQuantityToCartItem(userId, cartItemId, quantity);
+    }
 }

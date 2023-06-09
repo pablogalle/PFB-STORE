@@ -142,6 +142,9 @@ export class ItemListComponent implements OnInit {
   showInfoMessage(summary: string, detail: string) {
     this.messageService.add({ severity: 'info', summary: summary, detail: detail });
   }
+  showSuccessMessage(summary: string, detail: string){
+    this.messageService.add({ severity: 'success', summary: summary, detail: detail });
+  }
 
   toggleFavourite(id: number) {
     this.authenticationService.addFavouriteItem(id).subscribe(
@@ -163,7 +166,7 @@ export class ItemListComponent implements OnInit {
     let userId = this.authenticationService.userProfile!.id!;
     this.cartService.addItemToCart(item, userId).subscribe(
       response => {
-        console.log(response)
+        this.showSuccessMessage("Item Added To Cart", "Item Added to Shopping Cart Correctly")
       }
     );
   }
