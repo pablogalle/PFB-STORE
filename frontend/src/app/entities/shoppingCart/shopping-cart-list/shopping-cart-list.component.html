@@ -18,14 +18,15 @@
 
             <td>
                 {{cartItem.quantity}}
-                <button class="btn quantity-btn">
+                <button class="btn quantity-btn" (click)="asignQuantity(cartItem, cartItem.quantity-1)">
                     <i class="pi pi-minus"></i>
                 </button>
-                <button class="btn quantity-btn">
+                <button class="btn quantity-btn" (click)="asignQuantity(cartItem, cartItem.quantity+1)">
                     <i class="pi pi-plus"></i>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
+
 

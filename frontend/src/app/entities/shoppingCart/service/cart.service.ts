@@ -7,7 +7,7 @@ import { Item } from '../../item/modelo/item.model';
   providedIn: 'root'
 })
 export class CartService {
-
+  
   constructor(
     private http : HttpClient
   ) { }
@@ -20,5 +20,9 @@ export class CartService {
   addItemToCart(item: Item, userId: number){
     let urlEndpoint: string = "http://localhost:8080/store/users/"+userId+"/cart/addItem";
     return this.http.post<ShoppingCart>(urlEndpoint, item, { observe: 'response' });
+  }
+  asignQuantityToItem(newQuantity: number, cartId: number, userId: number) {
+    let urlEndpoint: string = "http://localhost:8080/store/users/"+userId+"/cart/"+cartId+"/"+newQuantity;
+    return this.http.patch<ShoppingCart>(urlEndpoint, { observe: 'response' });
   }
 }

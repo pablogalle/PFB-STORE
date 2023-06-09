@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../service/cart.service';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { CartItem } from '../model/CartItem.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-shopping-cart-list',
@@ -11,7 +12,6 @@ import { CartItem } from '../model/CartItem.model';
 export class ShoppingCartListComponent implements OnInit {
 
   cartItems: CartItem[] = []
-
 
 
   constructor(
@@ -34,4 +34,15 @@ export class ShoppingCartListComponent implements OnInit {
     }
   }
 
+  asignQuantity(cartItem : CartItem, newQuantity: number){
+    let userId = this.authService.userProfile!.id!
+    let cartId = cartItem.id
+    if(newQuantity<=0){
+      this.cartItems.splice(this.cartItems.indexOf(cartItem), 1)
+    }else cartItem.quantity = newQuantity
+    this.cartService.asignQuantityToItem(newQuantity, cartId, userId).subscribe()
+    
+  }
+
 }
+
